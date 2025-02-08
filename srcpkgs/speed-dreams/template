@@ -1,30 +1,41 @@
 # Template file for 'speed-dreams'
 pkgname=speed-dreams
-version=2.2.3
-revision=2
-_rev=r7616
-archs="i686* x86_64* ppc64le* aarch64*"
-create_wrksrc=yes
+version=2.4.0
+revision=1
+# keep in sync with the submodule revision used by this version
+_freesolid_rev=208c6e20311d6669ab0c74ace71a1fa34afb2e0e
+build_wrksrc=speed-dreams-code
 build_style=cmake
-build_helper=qemu
 configure_args="-DSD_BINDIR=/usr/bin -DSD_DATADIR=/usr/share/speed-dreams-2
- -DSD_LIBDIR=/usr/lib/speed-dreams-2 -DOPTION_OFFICIAL_ONLY=ON -Wno-dev"
+ -DSD_LIBDIR=/usr/lib/speed-dreams-2 -DOPTION_OFFICIAL_ONLY=ON
+ -DOPTION_TRACKEDITOR=OFF"
 hostmakedepends="pkg-config"
 makedepends="freealut-devel libenet-devel libfreeglut-devel libjpeg-turbo-devel
  libpng-devel libvorbis-devel libXrandr-devel osg-devel plib-devel SDL2-devel
- libcurl-devel zlib-devel"
+ SDL2_mixer-devel libcurl-devel zlib-devel glm cJSON-devel minizip-devel
+ rhash-devel tinygltf"
 short_desc="Open source motorsport simulation and racing game"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="GPL-2.0-or-later"
-homepage="http://www.speed-dreams.org"
-distfiles="${SOURCEFORGE_SITE}/speed-dreams/speed-dreams-src-base-${version}-${_rev}.tar.xz
- ${SOURCEFORGE_SITE}/speed-dreams/speed-dreams-src-wip-cars-and-tracks-${version}-${_rev}.tar.xz
- ${SOURCEFORGE_SITE}/speed-dreams/speed-dreams-src-hq-cars-and-tracks-${version}-${_rev}.tar.xz
- ${SOURCEFORGE_SITE}/speed-dreams/speed-dreams-src-more-hq-cars-and-tracks-${version}-${_rev}.tar.xz"
-checksum="1af07c483641f548af252b107cc3289fd37931445dc533b0b1a3781745d05021
- aff20e49ff94660d9ef962079f640d0ceeaa414869209be1ec41768d0ee5cb20
- 06eaf2094bc10fbaca980a4236c4e444dd14275aba3f7b1d62b4b3a53a9d4c77
- 19208761b252df9db200c733cecb3bb584905f02d057af2bbff5e4c86cbe1a86"
+homepage="https://www.speed-dreams.net"
+changelog="https://forge.a-lec.org/speed-dreams/speed-dreams-code/raw/branch/main/CHANGES.txt"
+distfiles="https://forge.a-lec.org/speed-dreams/speed-dreams-code/archive/v${version}.tar.gz>code-${version}.tar.gz
+https://forge.a-lec.org/speed-dreams/freesolid/archive/${_freesolid_rev}.tar.gz>freesolid-${_freesolid_rev}.tar.gz
+https://forge.a-lec.org/speed-dreams/speed-dreams-data/archive/v${version}.tar.gz>data-${version}.tar.gz"
+checksum="6c7ed40f83e54fb44ec6b690acb30c871bf4e7d9213d04c8b2e7502cf374b273
+ 2982ea18fb3e40ab303fceeb8f2b8204650d4e8034e11a6a1ecc286d60d80179
+ 47974efb7793e988ebd3a2d84a09e31ca8a672b515c4f5808a0813f8357bf104"
 replaces="speed-dreams-data>=0"
-LDFLAGS="-Wl,--no-as-needed -Wl,-z,stack-size=2097152"
 lib32disabled=yes
+
+#LDFLAGS="-Wl,--no-as-needed -Wl,-z,stack-size=2097152"
+
+post_extract() {
+	mv -v freesolid speed-dreams-code
+	mv -v speed-dreams-data speed-dreams-code
+}
+
+pre_patch() {
+	# don't download dependencies
+	rm -v packaging/3rdParty-devel/thirdpartydownloader.cmake
+}

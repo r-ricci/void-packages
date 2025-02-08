@@ -1,0 +1,11 @@
+--- a/speed-dreams-code/CMakeLists.txt
++++ b/speed-dreams-code/CMakeLists.txt
+@@ -93,7 +93,7 @@ INCLUDE(cmake/checks.cmake)
+ 
+ set(CMAKE_INSTALL_RPATH
+    ${CMAKE_INSTALL_RPATH}
+-   ${CMAKE_INSTALL_PREFIX}/${SD_LIBDIR}/lib
++   ${SD_LIBDIR}/lib
+ )
+ 
+ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
