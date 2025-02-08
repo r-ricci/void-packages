@@ -1,0 +1,16 @@
+# Template file for 'tinygltf'
+pkgname=tinygltf
+version=2.9.5
+revision=1
+build_style=cmake
+short_desc="Header only C++11 tiny glTF 2.0 library"
+maintainer="Roberto Ricci <io@r-ricci.it>"
+license="MIT"
+homepage="https://github.com/syoyo/tinygltf"
+changelog="https://github.com/syoyo/tinygltf/releases"
+distfiles="https://github.com/syoyo/tinygltf/archive/refs/tags/v${version}.tar.gz"
+checksum=7b93da27c524dd17179a0eeba6f432b0060d82f6222630ba027c219ce11e24db
+
+post_install() {
+	vlicense LICENSE
+}
