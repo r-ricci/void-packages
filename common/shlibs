@@ -4304,8 +4304,8 @@ libjli.so openjdk17-jre-17.0.1+12_1
 libjvm.so openjdk17-jre-17.0.1+12_1
 libspatialindex.so.6 libspatialindex-1.9.3_1
 librttopo.so.1 librttopo-1.1.0_1
-libspatialite.so.7 libspatialite-5.0.1_1
-mod_spatialite.so.7 libspatialite-5.0.1_1
+libspatialite.so.8 libspatialite-5.1.0_1
+mod_spatialite.so.8 libspatialite-5.1.0_1
 libreadosm.so.1 readosm-1.1.0a_1
 libSvtAv1Enc.so.4 libsvt-av1-4.0.1_1
 libyascreen.so.0 yascreen-1.96_1

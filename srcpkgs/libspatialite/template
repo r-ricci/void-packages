@@ -1,7 +1,7 @@
 # Template file for 'libspatialite'
 pkgname=libspatialite
-version=5.0.1
-revision=2
+version=5.1.0
+revision=1
 build_style=gnu-configure
 hostmakedepends="pkg-config geos-devel"
 makedepends="sqlite-devel zlib-devel proj-devel freexl-devel
@@ -10,10 +10,21 @@ short_desc="SQLite extension for Spatial SQL capabilities"
 maintainer="Michael Aldridge <maldridge@voidlinux.org>"
 license="GPL-2.0-or-later"
 homepage="https://www.gaia-gis.it/fossil/libspatialite/index"
-distfiles="http://www.gaia-gis.it/gaia-sins/libspatialite-$version.tar.gz"
-checksum=eecbc94311c78012d059ebc0fae86ea5ef6eecb13303e6e82b3753c1b3409e98
-# Checks don't all pass for this release.
-make_check=no
+distfiles="https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-${version}.tar.gz"
+checksum=43be2dd349daffe016dd1400c5d11285828c22fea35ca5109f21f3ed50605080
+
+pre_check() {
+	# musl doesn't know about _USE_GNU, it's used internally by glibc
+	# _GNU_SOURCE should be used instead, with both libcs
+	sed -i 's/_USE_GNU/_GNU_SOURCE/g' ./test/*.c
+
+	# TODO: investigate, report upstream
+	local _expected_failures="check_sql_stmt check_sql_stmt_tiny"
+	_expected_failures+=" check_sql_stmt_legacy check_sql_stmt_extension"
+	sed -i '/^TESTS = /aXFAIL_TESTS = '"${_expected_failures}" ./test/Makefile
+}
+
+# TODO: .so symlink should be in libspatialite, not -devel
 
 libspatialite-devel_package() {
 	short_desc+=" - development files"
