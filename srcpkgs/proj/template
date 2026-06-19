@@ -1,6 +1,6 @@
 # Template file for 'proj'
 pkgname=proj
-version=9.5.1
+version=9.8.1
 revision=1
 build_style=cmake
 hostmakedepends="sqlite"
@@ -10,7 +10,7 @@ maintainer="John <me@johnnynator.dev>"
 license="MIT"
 homepage="https://proj.org"
 distfiles="https://download.osgeo.org/proj/proj-${version}.tar.gz"
-checksum=a8395f9696338ffd46b0feb603edbb730fad6746fba77753c77f7f997345e3d3
+checksum=af5b731c145c1d13c4e3b4eeb7d167e94e845e440f71e3496b4ed8dae0291960
 
 post_install() {
 	vlicense COPYING
